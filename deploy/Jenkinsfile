@@ -1,0 +1,40 @@
+pipeline {
+    agent any
+
+    tools {
+        // Install the Maven version configured as "M3" and add it to the path.
+        maven "M3"
+        jdk "JDK11"
+    }
+
+    stages {
+        stage('Git Clone') {
+          steps {
+              echo 'Git Clone'
+              git url: 'https://github.com/wansohaneul/spring-petclinic.git',
+              branch: 'main', credentialsID: 'gitCredentials'
+          }
+        }
+        stage('Build') {
+          steps{
+            echo 'Build'
+          }
+        }
+        stage('Docker Image') {
+          steps{
+            echo 'Docker Image'
+          }
+        }
+        stage('Docker Push') {
+          steps{
+            echo 'Docker Push'
+          }
+        }
+        stage('Target Pull') {
+          steps{
+            echo 'Target Pull'
+          }
+        }           
+    }
+}
+
