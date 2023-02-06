@@ -14,6 +14,14 @@ pipeline {
               git url: 'https://github.com/wansohaneul/spring-petclinic.git',
               branch: 'main', credentialsId: 'gitCredentials'
           }
+          post {
+            success {
+              echo 'Git Clone Success'
+            }
+            failure {
+              echo 'Git Clone Fail'
+            }
+          }
         }
         stage('Build') {
           steps{
@@ -33,6 +41,12 @@ pipeline {
         stage('Target Pull') {
           steps{
             echo 'Target Pull'
+          }
+        }           
+    }
+}
+
+
           }
         }           
     }
