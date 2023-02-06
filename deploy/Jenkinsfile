@@ -33,26 +33,22 @@ pipeline {
                   junit '**/target/surefile-reports/*.xml'
               }
           }
-        }
         stage('Docker Image') {
-          steps{
+          steps {
             echo 'Docker Image'
           }
         }
         stage('Docker Push') {
-          steps{
+          steps {
             echo 'Docker Push'
           }
         }
         stage('Target CD') {
-          steps{
+          steps {
             echo 'Target CD'
             sshPublisher(publishers: [sshPublisherDesc(configName: 'target', 
             transfers: [sshTransfer(cleanRemote: false, excludes: '', 
             execCommand: '''
-            cd /home/ubuntu
-            sudo rm -rf *
-            mkdir deploy
             fuser -k 8080/tcp
             export BUILD_ID=PetClinic
             nohup java -jar /home/ubuntu/deploy/spring-petclinic-2.7.3.jar >> nohup.out 2>&1 &''', 
