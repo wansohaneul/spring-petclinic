@@ -1,71 +1,29 @@
 pipeline {
     agent any
-
+    
     tools {
-        // Install the Maven version configured as "M3" and add it to the path.
-        maven "M3"
-        jdk "JDK11"
+        maven 'M3'
+        jdk 'JDK11'
     }
-
     stages {
-        stage('Git Clone') {
-          steps {
-              echo 'Git Clone'
-              git url: 'https://github.com/wansohaneul/spring-petclinic.git',
-              branch: 'main', credentialsId: 'gitCredentials'
-          }
-          post {
-            success {
-              echo 'Git Clone Success'
+        stage('Git init') {
+            steps {
+                echo 'Git Init'
+                git url:'https://github.com/wansohaneul/spring-petclinic.git',
+                branch:'main', credentialsId: 'gitCredentials'
             }
-            failure {
-              echo 'Git Clone Fail'
-            }
-          }
         }
         stage('Build') {
-          steps{
-            echo 'Build'
-            sh 'mvn -Dmaven.test.failure.ignore=true clean package'
-          }
-          post {
-              success {
-                  junit '**/target/surefile-reports/*.xml'
-              }
-          }
-        stage('Docker Image') {
-          steps {
-            echo 'Docker Image'
-          }
+            steps {
+                echo 'Build'
+                sh 'mvn -Dmaven.test.failur.ignore=true clean package'
+            }
         }
-        stage('Docker Push') {
-          steps {
-            echo 'Docker Push'
-          }
+        stage('Deploy') {
+            steps {
+                echo 'Deploy'
+                
+            }
         }
-        stage('Target CD') {
-          steps {
-            echo 'Target CD'
-            sshPublisher(publishers: [sshPublisherDesc(configName: 'target', 
-            transfers: [sshTransfer(cleanRemote: false, excludes: '', 
-            execCommand: '''
-            fuser -k 8080/tcp
-            export BUILD_ID=PetClinic
-            nohup java -jar /home/ubuntu/deploy/spring-petclinic-2.7.3.jar >> nohup.out 2>&1 &''', 
-            execTimeout: 120000, 
-            flatten: false, 
-            makeEmptyDirs: false, 
-            noDefaultExcludes: false, 
-            patternSeparator: '[, ]+', 
-            remoteDirectory: 'deploy', 
-            remoteDirectorySDF: false, 
-            removePrefix: 'target', 
-            sourceFiles: 'target/*.jar')], 
-            usePromotionTimestamp: false, 
-            useWorkspaceInPromotion: false, verbose: false)])
-              
-          }
-        }           
     }
-}
 }
