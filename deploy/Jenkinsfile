@@ -10,7 +10,7 @@ pipeline {
         AWS_CREDENTIAL_NAME = "awsEcrCredentials"
         REGI0N = "ap-northeast-2"
         ECR_REPOSITORY = "257307634175.dkr.ecr.ap-northeast-2.amazonaws.com"
-        ECR_DOCKER_IMAGE = "std07-spring-petclinic/spring-petclinic"
+        ECR_DOCKER_IMAGE = "std07-spring-petclinic/std07-spring-petclinic"
         ECR_DOCKER_TAG = "1.0"
     }
     stages {
