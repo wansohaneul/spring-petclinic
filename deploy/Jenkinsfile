@@ -8,7 +8,7 @@ pipeline {
     
     environment {
         AWS_CREDENTIAL_NAME = "awsEcrCredentials"
-        REGI0N = "ap-northeast-2"
+        REGI0N = "ap-northeast-2a"
         ECR_REPOSITORY = "257307634175.dkr.ecr.ap-northeast-2.amazonaws.com"
         ECR_DOCKER_IMAGE = "${ECR_REPOSITORY}/std07-spring-petclinic"
         ECR_DOCKER_TAG = "1.0"
