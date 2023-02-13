@@ -7,17 +7,19 @@ pipeline {
     }
     environment {
         AWS_CREDENTIAL_NAME = "awsEcrCredentials"
+        AWS_ACCOUNT_ID = "257307634175"
         REGION = "ap-northeast-2"
-        ECR_REPOSITORY = "${params.AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-2.amazonaws.com"
-        ECR_DOCKER_IMAGE = "${ECR_REPOSITORY}/${params.DOCKER_IMAGE_NAME}"
-        ECR_DOCKER_TAG = "${params.DOCKER_TAG}"
+        DOCKER_IMAGE_NAME = "std07-spring-petclinic"        
+        ECR_REPOSITORY = "${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-2.amazonaws.com"
+        ECR_DOCKER_IMAGE = "${ECR_REPOSITORY}/${DOCKER_IMAGE_NAME}"
+        ECR_DOCKER_TAG = "1.0"
     }
     
     stages {
         stage('Git init') {
             steps {
                 echo 'Git Init'
-                git url:'https://github.com/wansohaneul/spring-petclinic.git/',
+                git url:'https://github.com/wansohanuel/spring-petclinic.git/',
                 branch: 'main', credentialsId: 'gitCredentials'
             }
         }
